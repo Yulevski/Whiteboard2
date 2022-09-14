@@ -1,5 +1,5 @@
 'use strict';
-
+//
 (function() {
   //class is a template for js object.
   //document=> the html file, refer to the white board in the html file.
