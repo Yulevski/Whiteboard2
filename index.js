@@ -12,8 +12,8 @@ function onConnection(socket){
 }
 
 
-//io.on('connection', onConnection);
-io.on('connection', onConnection, (socket) => {
+io.on('connection', onConnection);
+io.on('connection', (socket) => {
  
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
