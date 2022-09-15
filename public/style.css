@@ -17,7 +17,7 @@ html, body {
  * Canvas
  */
 
-.whiteboard {
+/*.whiteboard {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -25,6 +25,23 @@ html, body {
   right: 0;
   bottom: 0;
   top: 0;
+  margin-right: 0;
+  margin-left: auto; 
+}*/
+
+
+.parent {
+  display: flex;
+  height: 100%;
+}
+
+.first-child {
+  width: 32px;
+  height: 32px;
+}
+
+.second-child {
+  flex-grow: 1;
 }
 
 .colors {
@@ -42,3 +59,4 @@ html, body {
 .color.green { background-color: green; }
 .color.blue { background-color: blue; }
 .color.yellow { background-color: yellow; }
+
