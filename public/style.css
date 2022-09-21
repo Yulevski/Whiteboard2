@@ -17,7 +17,7 @@ html, body {
  * Canvas
  */
 
-/*.whiteboard {
+.whiteboard {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -27,7 +27,11 @@ html, body {
   top: 0;
   margin-right: 0;
   margin-left: auto; 
-}*/
+}
+
+/*#child-first-child {
+  border: 1px solid;
+}
 
 
 .parent {
@@ -43,14 +47,14 @@ html, body {
 .second-child {
   flex-grow: 1;
 }
-
+*/
 .colors {
-  position: fixed;
+  position: fixed;/*flexだと色が反応しない*/
 }
 
 .color {
-  /*display: inline-block;*/
-  display:inside;
+  display: inline-block;
+  /*display:inside;*/
   height: 48px;
   width: 48px;
 }
@@ -61,3 +65,12 @@ html, body {
 .color.blue { background-color: blue; }
 .color.yellow { background-color: yellow; }
 
+.message {
+  padding: 10px;
+  border: 1px solid #000;
+}
+
+.board {
+  padding: 10px;
+  border: 10px solid #000;
+}

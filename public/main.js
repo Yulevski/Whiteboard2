@@ -31,7 +31,7 @@
 
     colors[i].addEventListener('click', onColorUpdate, false);//.addeventlistener(event, object(function), options),colorsを配列的に
         //colors[i]にクリックイベントがあるとonColourUpdateを通してcolors[i]がcurent colorになる
-    //console.log("colors is",colors);//=5 5 colors?
+    console.log("colors is",colors);//=5 5 colors?
     //console.log("i is ",i);
     //console.log("colors[i] is",colors[i],i);
   }
@@ -60,6 +60,7 @@
     //console.log("x0is",x0);
     //console.log("wis",w);
     //console.log("coloris",color);
+    console.log("width is",canvas.width);
 
     socket.emit('drawing', {//Socket.ioサーバへ送信
       
@@ -118,7 +119,7 @@
   function onColorUpdate(e){//_\??どうHtmlと繋がる？
     current.color = e.target.className.split(' ')[1];//blueなど'色'をとってくる Spaceを入れるところ e=canvas
     //console.log("e.target is",e.target.className.split(' '));
-    //console.log(current,"current is");//色をクリックすると出る
+    console.log(current,"current is");//色をクリックすると出る
     //console.log("e is",e);//click { target: div.color.yellow, buttons: 0, clientX: 235, clientY: 29, layerX: 235, layerY: 29 }
   }
   //毎回x0に渡してソケット通信
@@ -133,6 +134,7 @@
       if ((time - previousCall) >= delay) {
         previousCall = time;
         callback.apply(null, arguments);
+        //console.log(arguments,"are nullthrottle");
       }
     };
   }
@@ -148,6 +150,8 @@
     
   // make the canvas fill its parent
   function onResize() {
+    //canvas.width = 200;
+    //canvas.height = 200;
     canvas.width = window.innerWidth;
     canvas.height = window.innerHeight;
   }
