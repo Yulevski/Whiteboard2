@@ -12,6 +12,7 @@
   var current = {    color: 'black'  };
   var drawing = false;                                  // deciding the initial state of mouse drawing 
   console.log("canvasis",canvas);
+  console.log("width is",canvas.width);
   
    
   //element.addEventListener(event, function, useCapture);
@@ -31,7 +32,7 @@
 
     colors[i].addEventListener('click', onColorUpdate, false);//.addeventlistener(event, object(function), options),colorsを配列的に
         //colors[i]にクリックイベントがあるとonColourUpdateを通してcolors[i]がcurent colorになる
-    console.log("colors is",colors);//=5 5 colors?
+    //console.log("colors is",colors);//=5 5 colors?
     //console.log("i is ",i);
     //console.log("colors[i] is",colors[i],i);
   }
@@ -80,8 +81,8 @@
     current.x = e.clientX||e.touches[0].clientX;//左辺か右辺がTrueの場合にTrueを返す,最初の点？e.client e.以下でeの中の取り出したいものをとる
     current.y = e.clientY||e.touches[0].clientY;
     //console.log("mouse down");
-    //console.log("mdown current.x is",current.x);
-    //console.log("mdown clientX is",e.clientX);
+    console.log("mdown current.x is",current.x);
+    console.log("mdown clientX is",e.clientX);
     //console.log("mdown .touches is",e.touches);
   }
   //Output the coordinates of the mouse pointer when the mouse button is clicked on an element:.clientX
@@ -119,7 +120,7 @@
   function onColorUpdate(e){//_\??どうHtmlと繋がる？
     current.color = e.target.className.split(' ')[1];//blueなど'色'をとってくる Spaceを入れるところ e=canvas
     //console.log("e.target is",e.target.className.split(' '));
-    console.log(current,"current is");//色をクリックすると出る
+    //console.log(current,"current is");//色をクリックすると出る
     //console.log("e is",e);//click { target: div.color.yellow, buttons: 0, clientX: 235, clientY: 29, layerX: 235, layerY: 29 }
   }
   //毎回x0に渡してソケット通信
