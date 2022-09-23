@@ -7,16 +7,15 @@
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
-  <div class="message">
-    <ul id="messages"></ul>
-    <form id="form" action="">
-      <input id="input" autocomplete="off" /><button>Send</button>
-    </form>
-  </div>
- /
-  <div class="board">
-    <canvas class="whiteboard" style="width:256px; height:256px"></canvas> 
+  <div class="big">
+    <div class="message">
+      <ul id="messages"></ul>
+      <form id="form" action="">
+        <input id="input" autocomplete="off" /><button>Send</button>
+      </form>
+    </div>
   
+  <div class="container">
     <div class="colors">
       <div class="color black"></div>
       <div class="color red"></div>
@@ -24,8 +23,11 @@
       <div class="color blue"></div>
       <div class="color yellow"></div>
     </div>
+      <div class="board">
+        <canvas class="whiteboard"></canvas>
+      </div> 
+    </div>
   </div>
-
   <script src="/socket.io/socket.io.js"></script>
   <script src="/main.js"></script>
   <script>

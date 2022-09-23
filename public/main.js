@@ -12,6 +12,7 @@
   var current = {    color: 'black'  };
   var drawing = false;                                  // deciding the initial state of mouse drawing 
   console.log("canvasis",canvas);
+  console.log("width is",canvas.width);
   
    
   //element.addEventListener(event, function, useCapture);
@@ -31,7 +32,7 @@
 
     colors[i].addEventListener('click', onColorUpdate, false);//.addeventlistener(event, object(function), options),colorsを配列的に
         //colors[i]にクリックイベントがあるとonColourUpdateを通してcolors[i]がcurent colorになる
-    console.log("colors is",colors);//=5 5 colors?
+    //console.log("colors is",colors);//=5 5 colors?
     //console.log("i is ",i);
     //console.log("colors[i] is",colors[i],i);
   }
@@ -77,23 +78,23 @@
   //define starting point of line
   function onMouseDown(e){//なぜeという引数を与える？ canvas=e?
     drawing = true;
-    current.x = e.clientX||e.touches[0].clientX;//左辺か右辺がTrueの場合にTrueを返す,最初の点？e.client e.以下でeの中の取り出したいものをとる
-    current.y = e.clientY||e.touches[0].clientY;
+    current.x = e.offsetX||e.touches[0].offsetX;//左辺か右辺がTrueの場合にTrueを返す,最初の点？e.offset e.以下でeの中の取り出したいものをとる
+    current.y = e.offsetY||e.touches[0].offsetY;
     //console.log("mouse down");
-    //console.log("mdown current.x is",current.x);
-    //console.log("mdown clientX is",e.clientX);
+    console.log("mdown current.x is",current.x);
+    console.log("mdown offsetX is",e.offsetX);
     //console.log("mdown .touches is",e.touches);
   }
-  //Output the coordinates of the mouse pointer when the mouse button is clicked on an element:.clientX
+  //Output the coordinates of the mouse pointer when the mouse button is clicked on an element:.offsetX
   //Find out how many fingers that touches the surface: .touches
   //毎回x0に渡してソケット通信
 
   function onMouseUp(e){
     if (!drawing) { return; }
     drawing = false;
-    drawLine(current.x, current.y, e.clientX||e.touches[0].clientX, e.clientY||e.touches[0].clientY, current.color, true);//function drawlineから
+    drawLine(current.x, current.y, e.offsetX||e.touches[0].offsetX, e.offsetY||e.touches[0].offsetY, current.color, true);//function drawlineから
     //console.log("mup current.x is",current.x);
-    //console.log("mup clientX is",e.clientX);
+    //console.log("mup offsetX is",e.offsetX);
     //console.log("mup .touches is",e.touches);
   
   }
@@ -103,13 +104,13 @@
     //console.log("e-1 is",e);
     if (!drawing) { return; }//線が途切れなくなる
     //console.log("mmove-1 current.x is",current.x);
-    //console.log("mmove-1 clientx is",e.clientX);
+    //console.log("mmove-1 offsetx is",e.offsetX);
     //console.log("mmove-1 .touches is",e.touches);
-    drawLine(current.x, current.y, e.clientX||e.touches[0].clientX, e.clientY||e.touches[0].clientY, current.color, true);// pass to io, 位置だけ
-    current.x = e.clientX||e.touches[0].clientX;//次の点が最初の点になる。
-    current.y = e.clientY||e.touches[0].clientY;
+    drawLine(current.x, current.y, e.offsetX||e.touches[0].offsetX, e.offsetY||e.touches[0].offsetY, current.color, true);// pass to io, 位置だけ
+    current.x = e.offsetX||e.touches[0].offsetX;//次の点が最初の点になる。
+    current.y = e.offsetY||e.touches[0].offsetY;
     //console.log("mmove current.x is",current.x);
-    //console.log("mmove clientx is",e.clientX);
+    //console.log("mmove offsetx is",e.offsetX);
     //console.log("e is",e);
     //console.log("mmove .touches is",e.touches);
   }
@@ -119,8 +120,8 @@
   function onColorUpdate(e){//_\??どうHtmlと繋がる？
     current.color = e.target.className.split(' ')[1];//blueなど'色'をとってくる Spaceを入れるところ e=canvas
     //console.log("e.target is",e.target.className.split(' '));
-    console.log(current,"current is");//色をクリックすると出る
-    //console.log("e is",e);//click { target: div.color.yellow, buttons: 0, clientX: 235, clientY: 29, layerX: 235, layerY: 29 }
+    //console.log(current,"current is");//色をクリックすると出る
+    //console.log("e is",e);//click { target: div.color.yellow, buttons: 0, offsetX: 235, offsetY: 29, layerX: 235, layerY: 29 }
   }
   //毎回x0に渡してソケット通信
 
@@ -150,10 +151,10 @@
     
   // make the canvas fill its parent
   function onResize() {
-    //canvas.width = 200;
-    //canvas.height = 200;
-    canvas.width = window.innerWidth;
-    canvas.height = window.innerHeight;
+    canvas.width = 1000;
+    canvas.height = 1000;
+    //canvas.width = window.innerWidth;
+    //canvas.height = window.innerHeight;
   }
 
 })();
