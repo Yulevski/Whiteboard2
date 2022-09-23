@@ -61,7 +61,7 @@
     //console.log("x0is",x0);
     //console.log("wis",w);
     //console.log("coloris",color);
-    console.log("width is",canvas.width);
+    //console.log("width is",canvas.width);
 
     socket.emit('drawing', {//Socket.ioサーバへ送信
       
@@ -83,6 +83,7 @@
     //console.log("mouse down");
     console.log("mdown current.x is",current.x);
     console.log("mdown offsetX is",e.offsetX);
+    console.log("mdown offsetY is",e.offsetY);
     //console.log("mdown .touches is",e.touches);
   }
   //Output the coordinates of the mouse pointer when the mouse button is clicked on an element:.offsetX
