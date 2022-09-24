@@ -4,7 +4,6 @@
   //class is a template for js object.
   //document=> the html file, refer to the white board in the html file.
   //The getContext() is a built-in HTML object, with properties and methods for drawing:
-
   var socket = io(); //console.log(io(),"io");io()を任意の変数へ格納することでSocket.ioが提供するさまざまなAPIを利用することができる
   var canvas = document.getElementsByClassName('whiteboard')[0];//Get all elements with class="whiteboard":全部でなくて1つ
   var colors = document.getElementsByClassName('color');//Get all elements with class="color":in document(html)
@@ -13,6 +12,29 @@
   var drawing = false;                                  // deciding the initial state of mouse drawing 
   console.log("canvasis",canvas);
   console.log("width is",canvas.width);
+  //ぺんの太さを変える機能
+  const penSS = document.querySelector("#pen-ss");
+  penSS.addEventListener("click", () => {
+    context.lineWidth = 1;
+  });
+  const penS = document.querySelector("#pen-s");
+  penS.addEventListener("click", () => {
+    context.lineWidth = 5;
+  });
+  const penM = document.querySelector("#pen-m");
+  penM.addEventListener("click", () => {
+    context.lineWidth = 10;
+  });
+  const penL = document.querySelector("#pen-l");
+  penL.addEventListener("click", () => {
+    context.lineWidth = 15;
+  });
+  const penLL = document.querySelector("#pen-ll");
+  penLL.addEventListener("click", () => {
+    context.lineWidth = 20;
+  });
+  // 太さ
+  //var brushsize = document.getElementsIdName('size');
   
    
   //element.addEventListener(event, function, useCapture);
@@ -43,15 +65,20 @@
   //console.log("onsocketdevent is",onDrawingEvent);//data定義されず
   window.addEventListener('resize', onResize, false);//.addeventlistener(event, object(function), options)
   onResize();
-
   
+  // // 太さ変更時
+  // function sizeChange(num) {
+  //   document.getElementById("size").innerHTML = num;
+  //   brushsize = num;
+  //   console.log("Brush is", num);
+  // }
   //
-  function drawLine(x0, y0, x1, y1, color, emit){
+  function drawLine(x0, y0, x1, y1, color,emit){//brushsize追加
     context.beginPath();//線の始まり context = canvas.getContext('2d');
     context.moveTo(x0, y0);//move to position(x0, y0 線の座標確定
     context.lineTo(x1, y1);//Create a line to position x1, y1　線の座標確定
     context.strokeStyle = color; //色確定
-    context.lineWidth = 2;
+    //context.lineWidth = 10;
     context.stroke();//draw a path
     context.closePath();
 
