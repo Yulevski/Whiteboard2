@@ -12,46 +12,24 @@
   var drawing = false;                                  // deciding the initial state of mouse drawing 
   console.log("canvasis",canvas);
   console.log("width is",canvas.width);
-  //ぺんの太さを変える機能
-  const penSS = document.querySelector("#pen-ss");
-  penSS.addEventListener("click", () => {
-    context.lineWidth = 1;
-  });
-  const penS = document.querySelector("#pen-s");
-  penS.addEventListener("click", () => {
-    context.lineWidth = 5;
-  });
-  const penM = document.querySelector("#pen-m");
-  penM.addEventListener("click", () => {
-    context.lineWidth = 10;
-  });
-  const penL = document.querySelector("#pen-l");
-  penL.addEventListener("click", () => {
-    context.lineWidth = 15;
-  });
-  const penLL = document.querySelector("#pen-ll");
-  penLL.addEventListener("click", () => {
-    context.lineWidth = 20;
-  });
+  var brushsize = 10;
+  //var stroke_width_picker = select('#stroke-width-picker');
+
   // 太さ
   //var brushsize = document.getElementsIdName('size');
-  
-   
   //element.addEventListener(event, function, useCapture);
   //The onmousedown event occurs when a user presses a mouse button over an element.
   canvas.addEventListener('mousedown', onMouseDown, false);//true ok
   canvas.addEventListener('mouseup', onMouseUp, false);//true ok
   canvas.addEventListener('mouseout', onMouseUp, false);//true ok
   canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);//true ok//every 10ms demonstrate theonMouseMoves
-  
   //Touch support for mobile devices
   canvas.addEventListener('touchstart', onMouseDown, false);//true no 線の始まり
   canvas.addEventListener('touchend', onMouseUp, false);//true no　線の途中
   canvas.addEventListener('touchcancel', onMouseUp, false);//true ok　線の終わり
   canvas.addEventListener('touchmove', throttle(onMouseMove, 1), false);//true ok
-
+  
   for (var i = 0; i < colors.length; i++){//from class=colors on the index.html?　引数の数(length)
-
     colors[i].addEventListener('click', onColorUpdate, false);//.addeventlistener(event, object(function), options),colorsを配列的に
         //colors[i]にクリックイベントがあるとonColourUpdateを通してcolors[i]がcurent colorになる
     //console.log("colors is",colors);//=5 5 colors?
@@ -66,28 +44,29 @@
   window.addEventListener('resize', onResize, false);//.addeventlistener(event, object(function), options)
   onResize();
   
-  // // 太さ変更時
-  // function sizeChange(num) {
-  //   document.getElementById("size").innerHTML = num;
-  //   brushsize = num;
-  //   console.log("Brush is", num);
-  // }
+  // 太さ変更時
+  function sizeChange(num) {
+    document.getElementById("size").innerHTML = num;
+    brushsize = num;
+  }
   //
-  function drawLine(x0, y0, x1, y1, color,emit){//brushsize追加
+  function drawLine(x0, y0, x1, y1, color,brushsize, emit){//brushsize追加
     context.beginPath();//線の始まり context = canvas.getContext('2d');
     context.moveTo(x0, y0);//move to position(x0, y0 線の座標確定
     context.lineTo(x1, y1);//Create a line to position x1, y1　線の座標確定
     context.strokeStyle = color; //色確定
-    //context.lineWidth = 10;
+    context.lineWidth = brushsize;
     context.stroke();//draw a path
     context.closePath();
+    console.log("width is",context.lineWidth);
+    console.log("color is",color);
 
-    if (!emit) { return; }//ブール値 emitがtrue-受信
+        if (!emit) { return; }//ブール値 emitがtrue-受信
     var w = canvas.width;
     var h = canvas.height;
     //console.log("x0is",x0);
     //console.log("wis",w);
-    //console.log("coloris",color);
+   
     //console.log("width is",canvas.width);
 
     socket.emit('drawing', {//Socket.ioサーバへ送信
@@ -96,10 +75,11 @@
       y0: y0 / h,
       x1: x1 / w,
       y1: y1 / h,
-      color: color
+      color: color,
+      brushsize:brushsize
 
     });
-    
+    console.log("coloris",color);
   
   }
   //define starting point of line
@@ -120,7 +100,8 @@
   function onMouseUp(e){
     if (!drawing) { return; }
     drawing = false;
-    drawLine(current.x, current.y, e.offsetX||e.touches[0].offsetX, e.offsetY||e.touches[0].offsetY, current.color, true);//function drawlineから
+    drawLine(current.x, current.y, e.offsetX||e.touches[0].offsetX, e.offsetY||e.touches[0].offsetY, current.color, true);
+    //function drawlineから
     //console.log("mup current.x is",current.x);
     //console.log("mup offsetX is",e.offsetX);
     //console.log("mup .touches is",e.touches);
@@ -134,9 +115,10 @@
     //console.log("mmove-1 current.x is",current.x);
     //console.log("mmove-1 offsetx is",e.offsetX);
     //console.log("mmove-1 .touches is",e.touches);
-    drawLine(current.x, current.y, e.offsetX||e.touches[0].offsetX, e.offsetY||e.touches[0].offsetY, current.color, true);// pass to io, 位置だけ
+    drawLine(current.x, current.y, e.offsetX||e.touches[0].offsetX, e.offsetY||e.touches[0].offsetY, current.color,true);// pass to io, 位置だけ
     current.x = e.offsetX||e.touches[0].offsetX;//次の点が最初の点になる。
     current.y = e.offsetY||e.touches[0].offsetY;
+    current.width = context.lineWidth;
     //console.log("mmove current.x is",current.x);
     //console.log("mmove offsetx is",e.offsetX);
     //console.log("e is",e);
@@ -172,7 +154,7 @@
     var w = canvas.width;
     var h = canvas.height;
     
-    drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color);//true入っていない
+    drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color,data.brushsize);//true入っていない
     //console.log("data is",data,data.x0,data.x0 * w);//data定義されず
     //console.log("DL is",drawLine);
   }

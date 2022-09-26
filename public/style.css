@@ -67,6 +67,8 @@ html, body {
 .color.blue { background-color: blue; }
 .color.yellow { background-color: yellow; }
 
+
+
 .big{
   display: flex;
   height: 100%;
@@ -102,3 +104,16 @@ html, body {
   border: 5px solid #666;
   right: 200px;
 }
+
+input.stroke_width_picker {
+  border: 1px solid #AAA;
+  color: #666;
+  text-transform: uppercase;
+  float: left;
+  outline: none;
+  padding: 10px;
+  text-transform: uppercase;
+  width: 85px;
+  position:relative;
+}
+
