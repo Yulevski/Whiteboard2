@@ -1,15 +1,13 @@
 'use strict';
 //
 (function() {
-  //class is a template for js object.
-  //document=> the html file, refer to the white board in the html file.
-  //The getContext() is a built-in HTML object, with properties and methods for drawing:
-  var socket = io(); //console.log(io(),"io");io()を任意の変数へ格納することでSocket.ioが提供するさまざまなAPIを利用することができる
-  var canvas = document.getElementsByClassName('whiteboard')[0];//Get all elements with class="whiteboard":全部でなくて1つ
-  var colors = document.getElementsByClassName('color');//Get all elements with class="color":in document(html)
+ 
+  var socket = io(); 
+  var canvas = document.getElementsByClassName('whiteboard')[0];
+  var colors = document.getElementsByClassName('color');
   var context = canvas.getContext('2d');
   var current = {    color: 'black'  };
-  var drawing = false;                                  // deciding the initial state of mouse drawing 
+  var drawing = false;
   console.log("canvasis",canvas);
   console.log("width is",canvas.width);
   var brushsize = 10;
@@ -18,20 +16,20 @@
   // 太さ
   //var brushsize = document.getElementsIdName('size');
   //element.addEventListener(event, function, useCapture);
-  //The onmousedown event occurs when a user presses a mouse button over an element.
-  canvas.addEventListener('mousedown', onMouseDown, false);//true ok
-  canvas.addEventListener('mouseup', onMouseUp, false);//true ok
-  canvas.addEventListener('mouseout', onMouseUp, false);//true ok
-  canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);//true ok//every 10ms demonstrate theonMouseMoves
-  //Touch support for mobile devices
-  canvas.addEventListener('touchstart', onMouseDown, false);//true no 線の始まり
-  canvas.addEventListener('touchend', onMouseUp, false);//true no　線の途中
-  canvas.addEventListener('touchcancel', onMouseUp, false);//true ok　線の終わり
-  canvas.addEventListener('touchmove', throttle(onMouseMove, 1), false);//true ok
   
-  for (var i = 0; i < colors.length; i++){//from class=colors on the index.html?　引数の数(length)
-    colors[i].addEventListener('click', onColorUpdate, false);//.addeventlistener(event, object(function), options),colorsを配列的に
-        //colors[i]にクリックイベントがあるとonColourUpdateを通してcolors[i]がcurent colorになる
+  canvas.addEventListener('mousedown', onMouseDown, false);
+  canvas.addEventListener('mouseup', onMouseUp, false);
+  canvas.addEventListener('mouseout', onMouseUp, false);
+  canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
+  //Touch support for mobile devices
+  canvas.addEventListener('touchstart', onMouseDown, false);//線の始まり
+  canvas.addEventListener('touchend', onMouseUp, false);//線の途中
+  canvas.addEventListener('touchcancel', onMouseUp, false);//線の終わり
+  canvas.addEventListener('touchmove', throttle(onMouseMove, 1), false);
+  
+  for (var i = 0; i < colors.length; i++){
+    colors[i].addEventListener('click', onColorUpdate, false);
+   
     //console.log("colors is",colors);//=5 5 colors?
     //console.log("i is ",i);
     //console.log("colors[i] is",colors[i],i);
@@ -40,8 +38,8 @@
   //受信した内容をondrawingeventで描画
   socket.on('drawing', onDrawingEvent);//drawing というイベントがあるとondrawingeventを発動. 受信した値を使う　'drawing'イベント検知
   //console.log("onsocket is",socket);
-  //console.log("onsocketdevent is",onDrawingEvent);//data定義されず
-  window.addEventListener('resize', onResize, false);//.addeventlistener(event, object(function), options)
+  //console.log("onsocketdevent is",onDrawingEvent);
+  window.addEventListener('resize', onResize, false);
   onResize();
   
   // 太さ変更時
@@ -66,10 +64,9 @@
     var h = canvas.height;
     //console.log("x0is",x0);
     //console.log("wis",w);
-   
     //console.log("width is",canvas.width);
 
-    socket.emit('drawing', {//Socket.ioサーバへ送信
+    socket.emit('drawing', {
       
       x0: x0 / w,
       y0: y0 / h,
@@ -83,9 +80,9 @@
   
   }
   //define starting point of line
-  function onMouseDown(e){//なぜeという引数を与える？ canvas=e?
+  function onMouseDown(e){
     drawing = true;
-    current.x = e.offsetX||e.touches[0].offsetX;//左辺か右辺がTrueの場合にTrueを返す,最初の点？e.offset e.以下でeの中の取り出したいものをとる
+    current.x = e.offsetX||e.touches[0].offsetX;
     current.y = e.offsetY||e.touches[0].offsetY;
     //console.log("mouse down");
     console.log("mdown current.x is",current.x);
@@ -93,9 +90,6 @@
     console.log("mdown offsetY is",e.offsetY);
     //console.log("mdown .touches is",e.touches);
   }
-  //Output the coordinates of the mouse pointer when the mouse button is clicked on an element:.offsetX
-  //Find out how many fingers that touches the surface: .touches
-  //毎回x0に渡してソケット通信
 
   function onMouseUp(e){
     if (!drawing) { return; }
@@ -111,11 +105,11 @@
 
   function onMouseMove(e){
     //console.log("e-1 is",e);
-    if (!drawing) { return; }//線が途切れなくなる
+    if (!drawing) { return; };
     //console.log("mmove-1 current.x is",current.x);
     //console.log("mmove-1 offsetx is",e.offsetX);
     //console.log("mmove-1 .touches is",e.touches);
-    drawLine(current.x, current.y, e.offsetX||e.touches[0].offsetX, e.offsetY||e.touches[0].offsetY, current.color,true);// pass to io, 位置だけ
+    drawLine(current.x, current.y, e.offsetX||e.touches[0].offsetX, e.offsetY||e.touches[0].offsetY, current.color,true);
     current.x = e.offsetX||e.touches[0].offsetX;//次の点が最初の点になる。
     current.y = e.offsetY||e.touches[0].offsetY;
     current.width = context.lineWidth;
@@ -124,14 +118,12 @@
     //console.log("e is",e);
     //console.log("mmove .touches is",e.touches);
   }
-  //.drawLine(startX, startY, endX, endY);
-  //毎回x0に渡してソケット通信？ｔ
 
-  function onColorUpdate(e){//_\??どうHtmlと繋がる？
-    current.color = e.target.className.split(' ')[1];//blueなど'色'をとってくる Spaceを入れるところ e=canvas
+  function onColorUpdate(e){
+    current.color = e.target.className.split(' ')[1];
     //console.log("e.target is",e.target.className.split(' '));
     //console.log(current,"current is");//色をクリックすると出る
-    //console.log("e is",e);//click { target: div.color.yellow, buttons: 0, offsetX: 235, offsetY: 29, layerX: 235, layerY: 29 }
+  
   }
   //毎回x0に渡してソケット通信
 
@@ -150,7 +142,7 @@
     };
   }
 
-  function onDrawingEvent(data){//browser書き込み dataはSocketの情報？
+  function onDrawingEvent(data){
     var w = canvas.width;
     var h = canvas.height;
     
