@@ -16,19 +16,14 @@
     </div>
       
     <div class="container">
-      <div class="colors">
-        <div class="color black"></div>
-        <div class="color red"></div>
-        <div class="color green"></div>
-        <div class="color blue"></div>
-        <div class="color yellow"></div>
+      <div id="toolbar">
+        <h1>Draw.</h1>
+        <label for="stroke">Stroke</label>
+        <input id="stroke" name='stroke' type="color">
+        <label for="lineWidth">Line Width</label>
+        <input id="lineWidth" name='lineWidth' type="number" value="5">
+        <button id="clear">Clear</button>
       </div>
-          <div class="col" id="size-area">
-            <h5 class="card-title">太さ</h5>
-            <input id="slider" type="range" min="1" max="100" value="10"
-                onChange="sizeChange(this.value)">
-            <span id="size">10</span>
-          </div>
         <div class="board">
           <canvas class="whiteboard"></canvas>
         </div> 
