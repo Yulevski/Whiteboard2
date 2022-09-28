@@ -1,64 +1,69 @@
-<!doctype html>
+<!DOCTYPE html>
 <html lang="en">
-<head>
-  <meta charset="UTF-8">
-  <title>Socket.IO whiteboard</title>
-  
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
-  <div class="big">
-    <div class="message">
-      <ul id="messages"></ul>
-      <form id="form" action="">
-        <input id="input" autocomplete="off" /><button>Send</button>
-      </form>
-    </div>
-      
-    <div class="container">
-      <div class="colors">
-        <div class="color black"></div>
-        <div class="color red"></div>
-        <div class="color green"></div>
-        <div class="color blue"></div>
-        <div class="color yellow"></div>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Socket.IO whiteboard</title>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <h1>TEST</h1>
+    <div class="big">
+      <div class="message">
+        <ul id="messages"></ul>
+        <form id="form" action="">
+          <input id="input" autocomplete="off" /><button>Send</button>
+        </form>
       </div>
-          <div class="col" id="size-area">
-            <h5 class="card-title">太さ</h5>
-            <input id="slider" type="range" min="1" max="100" value="10"
-                onChange="sizeChange(this.value)">
-            <span id="size">10</span>
-          </div>
+
+      <div class="container">
+        <div class="colors">
+          <div class="color black"></div>
+          <div class="color red"></div>
+          <div class="color green"></div>
+          <div class="color blue"></div>
+          <div class="color yellow"></div>
+        </div>
+        <div class="col" id="size-area">
+          <h5 class="card-title">太さ</h5>
+          <input
+            id="slider"
+            type="range"
+            min="1"
+            max="100"
+            value="10"
+            onChange="sizeChange(this.value)"
+          />
+          <span id="size">10</span>
+        </div>
         <div class="board">
           <canvas class="whiteboard"></canvas>
-        </div> 
+        </div>
       </div>
-  </div>
-  <script src="/socket.io/socket.io.js"></script>
-  <script src="/main.js"></script>
-  <script>
-    var socket = io();
-  
-    var messages = document.getElementById('messages');
-    var form = document.getElementById('form');
-    var input = document.getElementById('input');
-  
-    form.addEventListener('submit', function(e) {
-      e.preventDefault();
-      if (input.value) {
-        socket.emit('chat message', input.value);
-        input.value = '';
-      }
-    });
-  
-    socket.on('chat message', function(msg) {
-      var item = document.createElement('li');
-      item.textContent = msg;
-      messages.appendChild(item);
-      window.scrollTo(0, document.body.scrollHeight);
-    });
-  </script>
-    
-  
-</body>
+    </div>
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="/main.js"></script>
+    <script>
+      var socket = io();
+
+      var messages = document.getElementById("messages");
+      var form = document.getElementById("form");
+      var input = document.getElementById("input");
+
+      form.addEventListener("submit", function (e) {
+        e.preventDefault();
+        if (input.value) {
+          socket.emit("chat message", input.value);
+          input.value = "";
+        }
+      });
+
+      socket.on("chat message", function (msg) {
+        var item = document.createElement("li");
+        item.textContent = msg;
+        messages.appendChild(item);
+        window.scrollTo(0, document.body.scrollHeight);
+      });
+    </script>
+  </body>
 </html>
