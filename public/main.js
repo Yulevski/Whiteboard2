@@ -6,12 +6,13 @@
   var canvas = document.getElementsByClassName('whiteboard')[0];
   var colors = document.getElementsByClassName('color');
   const toolbar = document.getElementById('toolbar');
+  const eraserButton = document.querySelector('#eraser-button');
   var context = canvas.getContext('2d');
   var current = {    color: 'black'  };
   var drawing = false;
   console.log("canvasis",canvas);
   console.log("width is",canvas.width);
-  let lineWidth = 10;
+  let lineWidth = 5;
   //var stroke_width_picker = select('#stroke-width-picker');
 
   // 太さ
@@ -21,12 +22,13 @@
   canvas.addEventListener('mousedown', onMouseDown, false);
   canvas.addEventListener('mouseup', onMouseUp, false);
   canvas.addEventListener('mouseout', onMouseUp, false);
-  canvas.addEventListener('mousemove', throttle(onMouseMove, 10), false);
+  canvas.addEventListener('mousemove', throttle(onMouseMove, 1), false);
   //Touch support for mobile devices
   canvas.addEventListener('touchstart', onMouseDown, false);//線の始まり
   canvas.addEventListener('touchend', onMouseUp, false);//線の途中
   canvas.addEventListener('touchcancel', onMouseUp, false);//線の終わり
-  canvas.addEventListener('touchmove', throttle(onMouseMove, 1), false);
+  canvas.addEventListener('touchmove', throttle(onMouseMove, 20), false);
+  
   toolbar.addEventListener('change', e => {
     if(e.target.id === 'stroke') {
         current.strokeStyle = e.target.value;
@@ -36,14 +38,21 @@
         current.lineWidth = e.target.value;
     }
   });
+  eraserButton.addEventListener('click', () => {
+    // 消しゴムと同等の機能を実装したい場合は現在選択している線の色を
+    // 白(#FFFFFF)に変更する
+   current.strokeStyle = '#FFFFFF';
+  });
   
-  for (var i = 0; i < colors.length; i++){
-    colors[i].addEventListener('click', onColorUpdate, false);
+
+
+  // for (var i = 0; i < colors.length; i++){
+  //   colors[i].addEventListener('click', onColorUpdate, false);
    
-    //console.log("colors is",colors);//=5 5 colors?
-    //console.log("i is ",i);
-    //console.log("colors[i] is",colors[i],i);
-  }
+  //   //console.log("colors is",colors);//=5 5 colors?
+  //   //console.log("i is ",i);
+  //   //console.log("colors[i] is",colors[i],i);
+  // }
 
   //受信した内容をondrawingeventで描画
   socket.on('drawing', onDrawingEvent);//drawing というイベントがあるとondrawingeventを発動. 受信した値を使う　'drawing'イベント検知
@@ -121,15 +130,16 @@
     current.y = e.offsetY||e.touches[0].offsetY;
     console.log("mmove current.x is",current.x);
     console.log("mmove offsetx is",e.offsetX);
+    console.log("color is",current.strokeStyle);
     
   }
 
-  function onColorUpdate(e){
-    current.color = e.target.className.split(' ')[1];
-    //console.log("e.target is",e.target.className.split(' '));
-    //console.log(current,"current is");//色をクリックすると出る
+  // function onColorUpdate(e){
+  //   current.color = e.target.className.split(' ')[1];
+  //   //console.log("e.target is",e.target.className.split(' '));
+  //   //console.log(current,"current is");//色をクリックすると出る
   
-  }
+  // }
   //毎回x0に渡してソケット通信
 
   // limit the number of events per second

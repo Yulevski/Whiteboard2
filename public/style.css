@@ -52,20 +52,20 @@ html, body {
   position: static;/*flexだと色が反応しない*/
 }
 
-.color {
+/* .color {
   display: inline-block;
   /*display:inside;*/
-  height: 48px;
+  /* height: 48px;
   width: 48px;
-  right: 20px;
+  right: 20px; */
   
-}
+/* }
 
 .color.black { background-color: black; }
 .color.red { background-color: red; }
 .color.green { background-color: green; }
 .color.blue { background-color: blue; }
-.color.yellow { background-color: yellow; }
+.color.yellow { background-color: yellow; } */ 
 
 
 
