@@ -29,11 +29,11 @@
   canvas.addEventListener('touchmove', throttle(onMouseMove, 1), false);
   toolbar.addEventListener('change', e => {
     if(e.target.id === 'stroke') {
-        ctx.strokeStyle = e.target.value;
+        current.strokeStyle = e.target.value;
     }
 
     if(e.target.id === 'lineWidth') {
-        lineWidth = e.target.value;
+        current.lineWidth = e.target.value;
     }
   
   for (var i = 0; i < colors.length; i++){
@@ -102,7 +102,7 @@
   function onMouseUp(e){
     if (!drawing) { return; }
     drawing = false;
-    drawLine(current.x, current.y, e.offsetX||e.touches[0].offsetX, e.offsetY||e.touches[0].offsetY, ctx.strokeStyle,lineWidth, true);//current.color
+    drawLine(current.x, current.y, e.offsetX||e.touches[0].offsetX, e.offsetY||e.touches[0].offsetY, current.strokeStyle,current.lineWidth, true);//current.color
     //function drawlineから
     //console.log("mup current.x is",current.x);
     //console.log("mup offsetX is",e.offsetX);
@@ -115,13 +115,13 @@
     //console.log("e-1 is",e);
     if (!drawing) { return; };
   
-    drawLine(current.x, current.y, e.offsetX||e.touches[0].offsetX, e.offsetY||e.touches[0].offsetY,ctx.strokeStyle,lineWidth,true);//current.color
+    drawLine(current.x, current.y, e.offsetX||e.touches[0].offsetX, e.offsetY||e.touches[0].offsetY,current.strokeStyle,current.lineWidth,true);//current.color
     current.x = e.offsetX||e.touches[0].offsetX;//次の点が最初の点になる。
     current.y = e.offsetY||e.touches[0].offsetY;
     current.width = context.lineWidth;
     console.log("mmove current.x is",current.x);
     console.log("mmove offsetx is",e.offsetX);
-  
+    
   }
 
   function onColorUpdate(e){
@@ -151,7 +151,7 @@
     var w = canvas.width;
     var h = canvas.height;
     
-    drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.ctx.strokeStyle,data.lineWidth);
+    drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color,data.lineWidth);
     //drawLine(data.x0 * w, data.y0 * h, data.x1 * w, data.y1 * h, data.color,data.brushsize);//true入っていない
     //console.log("data is",data,data.x0,data.x0 * w);//data定義されず
     //console.log("DL is",drawLine);
