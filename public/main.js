@@ -13,11 +13,6 @@
   console.log("canvasis",canvas);
   console.log("width is",canvas.width);
   let lineWidth = 5;
-  //var stroke_width_picker = select('#stroke-width-picker');
-
-  // 太さ
-  //var brushsize = document.getElementsIdName('size');
-  //element.addEventListener(event, function, useCapture);
   
   canvas.addEventListener('mousedown', onMouseDown, false);
   canvas.addEventListener('mouseup', onMouseUp, false);
@@ -44,8 +39,6 @@
    current.strokeStyle = '#FFFFFF';
   });
   
-
-
   // for (var i = 0; i < colors.length; i++){
   //   colors[i].addEventListener('click', onColorUpdate, false);
    
