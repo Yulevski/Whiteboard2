@@ -3,17 +3,41 @@
 <head>
   <meta charset="UTF-8">
   <title>Socket.IO whiteboard</title>
-  
+
   <link rel="stylesheet" href="style.css">
+  <meta charset="UTF-8">
+    <title></title>
+    <link rel="stylesheet" type="text/css" href="./style.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.2.0/socket.io.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="./chat_message.js"></script>
+    <!-- Load the Paper.js library -->
+    <script type="text/javascript" src="js/paper.js"></script>
+    <!-- Load external PaperScript and associate it with myCanvas -->
+    <script type="text/paperscript" src="js/main.js" canvas="myCanvas"></script>
+    
 </head>
 <body>
-  <div class="big">
+  <!-- <div class="big">
     <div class="message">
       <ul id="messages"></ul>
       <form id="form" action="">
         <input id="input" autocomplete="off" /><button>Send</button>
       </form>
+    </div> -->
+    <div class="line">
+      </div>
+
+      <div class="submit">
+          <input class="form-control" id="msgForm" autocomplete="off" maxlength="120">
+          <input type="button" id="sendButton" onclick="window.message()" value="送信">
+      </div>
+
+      <div class="file">
+          <input type="file" name="upfile" id="upfile" accept="image/*" capture="camera" />
+          <input type="button" onclick="upload()" value="送信">
     </div>
+
       
     <div class="container">
       <div id="toolbar">

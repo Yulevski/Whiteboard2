@@ -69,6 +69,7 @@
     context.lineWidth = lineWidth;
     context.stroke();//draw a path
     context.closePath();
+    context.lineCap = "round";
     
         if (!emit) { return; }//ブール値 emitがtrue-受信
     var w = canvas.width;
