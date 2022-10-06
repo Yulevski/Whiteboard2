@@ -17,7 +17,7 @@ html, body {
  * Canvas
  */
 
-.whiteboard {
+/* .whiteboard {
   height: 100%;
   width: 100%;
   position: absolute;
@@ -27,7 +27,7 @@ html, body {
   top: 0;
   margin-right: 0;
   margin-left: auto; 
-}
+} */
 
 /*#child-first-child {
   border: 1px solid;
@@ -69,44 +69,37 @@ html, body {
 
 
 
-.big{
+/* .big{
   display: flex;
   height: 100%;
-}
+} */
 /* .whiteboard */
 .container{
-  flex-grow: 1;
-  position: fixed;
-  right: 200px;
+  display: flex;
+  flex-direction: column;
+  height: 100%; 
+  width: 100%;
+  /* align-items: center;
+  justify-content: center; */
 }
-
-.message {
-  padding: 10px; 
-  border: 5px solid #000;
-  width: 320px;
-  height: 320px;
-  background-color:bisque;
-  position:fixed;
-}
-
 .board {
   padding: 0px;
   /* border: 0px solid #000; */
-  height: 1000px;
-  width: 1000px;
-  background-color: powderblue;
-  position:fixed;
-  right: 200px;
+  /* height: 1000px;
+  width: 1000px; */
+  /* position:static; */
+  /* right: 200px; */
 
 }
 .whiteboard{
-  position:static;
+  position:absolute;
   border: 5px solid #666;
-  right: 200px;
+  background-color: rgb(227, 235, 238);
+  /* right: 200px; */
 }
 
 input.stroke_width_picker {
-  border: 1px solid #AAA;
+  border: 5px solid rgb(68, 66, 66);
   color: #666;
   text-transform: uppercase;
   float: left;
@@ -116,4 +109,15 @@ input.stroke_width_picker {
   width: 85px;
   position:relative;
 }
+
+
+/* .message {
+  padding: 10px; 
+  border: 5px solid #000;
+  width: 320px;
+  height: 320px;
+  background-color:bisque;
+  position:fixed;
+} */
+
 

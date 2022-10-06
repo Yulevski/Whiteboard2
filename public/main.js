@@ -13,6 +13,12 @@
   console.log("canvasis",canvas);
   console.log("width is",canvas.width);
   let lineWidth = 5;
+  const w = document.documentElement.clientWidth;
+	const h = document.documentElement.clientHeight;
+  console.log("w and h are",w,h);
+  window.addEventListener('beforeunload', function(e){
+  onMouseMove;
+  console.log('beforeunload');});
   
   canvas.addEventListener('mousedown', onMouseDown, false);
   canvas.addEventListener('mouseup', onMouseUp, false);
@@ -163,10 +169,12 @@
     
   // make the canvas fill its parent
   function onResize() {
-    canvas.width = 1000;
-    canvas.height = 1000;
-    //canvas.width = window.innerWidth;
-    //canvas.height = window.innerHeight;
+    // canvas.width = 1000;
+    // canvas.height = 1000;
+    canvas.width = window.innerWidth;
+    canvas.height = window.innerHeight;
+    // canvas.width = w;
+    // canvas.height = h;
   }
 
 })();
